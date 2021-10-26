@@ -64,24 +64,26 @@ class BaseClass:
         sleep(show_time)
 
 
-    def get_csv(self, file_path: PosixPath, just_name: bool=False, **kwargs) -> DataFrame: 
+    def get_csv(self, file_path: PosixPath, just_name: bool=False, add_subfolder: bool=False, subfolder_name: str='transformed', **kwargs) -> DataFrame: 
         '''
         Obtener tabla a partir de un archivo .csv
         '''
         # Obtiene el nombre del archivo a partir de un directorio
         file_name = str(file_path).split('/')[-1]
         try: 
+            if add_subfolder: get_from = self.base_dir.joinpath(subfolder_name)
+            else: get_from = self.base_dir
             # Si el parámetro lo indica, obtiene el csv conectando el directorio con el nombre del archivo
-            if just_name: df = read_csv(self.base_dir.joinpath(file_name), low_memory=False, **kwargs)
+            if just_name: df = read_csv(get_from.joinpath(file_name), low_memory=False, **kwargs)
             # De otro modo, utiliza el directorio que recibe como parámetro
             else: df = read_csv(file_path, low_memory=False, **kwargs)
 
             # Obtiene e informa del número de renglones y columnas
             df_shape = df.shape
-            self.cool_print(f'Archivo con nombre {file_name} fue encontrado en:\n{self.base_dir}\nCon {df_shape[0]} renglones y {df_shape[-1]} columnas')
+            self.cool_print(f'Archivo con nombre {file_name} fue encontrado en:\n{get_from}\nCon {df_shape[0]} renglones y {df_shape[-1]} columnas')
             return df
         # Imprime que hubo un error al obtener el csv
-        except: self.cool_print(f'No se encontró el archivo con nombre {file_name} en:\n{self.base_dir}\nSi el archivo csv existe, seguramente tiene un encoding y/o separador diferente a "utf-8" y "," respectivamente\nIntenta de nuevo!')
+        except: self.cool_print(f'No se encontró el archivo con nombre {file_name} en:\n{get_from}\nSi el archivo csv existe, seguramente tiene un encoding y/o separador diferente a "utf-8" y "," respectivamente\nIntenta de nuevo!')
     
 
     def export_csv(self, df: DataFrame, name_suffix: str=None, to_subfolder: str=None, **kwargs) -> None: 
@@ -327,6 +329,10 @@ class BaseClass:
 
         # Devuelve el objeto para clustering, la lista de scores tanto en train como en test y la relevancia de cada variable para el modelo 
         return pipe_obj, (test_score,train_score), coef_var
+
+
+    def choose_best_model(self, X: DataFrame, y: array, models: list, scaler=RobustScaler):
+        pass
 
 
     def real_vs_est(self, X: DataFrame, y: array, model, omit_zero: bool=True) -> DataFrame:
