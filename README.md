@@ -25,3 +25,25 @@ Se obtienen los [datos abiertos de Ecobici](https://www.ecobici.cdmx.gob.mx/es/i
 |---|---|---|---|---|---|---|---|---|
 |M|39|10849|430|30/11/20|23:45:01|166|01/12/20|0:27:25|
 |F|24|9943|122|01/12/20|5:55:41|326|01/12/20|6:21:13|
+
+<br>
+# Importar
+
+Al leer los 48 archivos csv se reestructura por chunks tal que la tabla final indica la demanda de cada estación para cada ventana de tiempo en la respectiva fecha:
+
+|Ciclo_Estacion_Retiro|fecha|00 a 09|10 a 12|13 a 14|15 a 17|18 a 20|>= 21|
+|---|---|---|---|---|---|---|---|
+|1|01/01/18|1|10|9|15|8|0|
+|1|02/01/18|40|30|22|34|54|8|
+|1|03/01/18|51|37|43|53|59|8|
+|1|04/01/18|67|18|44|46|61|9|
+|1|05/01/18|62|36|44|56|27|11|
+|1|06/01/18|13|25|16|19|17|7|
+|1|07/01/18|12|22|18|29|22|7|
+|1|08/01/18|79|38|37|56|95|11|
+|1|09/01/18|83|33|33|52|99|18|
+
+<br>
+# Transformar
+
+Para cada estación, se "recorre" la demanda que tuvo en cada ventana de tiempo para que el próximo modelo "aprenda" la estacionalidad y tendencia de la demanda, es decir, podrá contestar la pregunta: ¿Cuántos viajes tendré en mi estación hoy? Porque ahora sabemos cómo fueron los viajes de los últimos 40 días en cada ventana de tiempo.
