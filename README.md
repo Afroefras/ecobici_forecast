@@ -33,7 +33,7 @@ Se obtienen los [datos abiertos de Ecobici](https://www.ecobici.cdmx.gob.mx/es/i
 
 Al leer los 48 archivos csv se reestructura por chunks tal que la tabla final indica la demanda de cada estación para cada ventana de tiempo en la respectiva fecha:
 
-|Ciclo_Estacion_Retiro|fecha|00 a 09|10 a 12|13 a 14|15 a 17|18 a 20|>= 21|
+|Estacion_Retiro|fecha|00 a 09|10 a 12|13 a 14|15 a 17|18 a 20|>= 21|
 |---|---|---|---|---|---|---|---|
 |1|01/01/18|1|10|9|15|8|0|
 |1|02/01/18|40|30|22|34|54|8|
