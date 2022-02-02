@@ -1,5 +1,6 @@
 # ecobici_forecast
-Tiene sentido que la demanda de bicis en CDMX tenga una estacionalidad por horas del día y días de la semana. Pero ¿es posible predecir la demanda futura? ¡Claro que sí! 🚴🏾
+Tiene sentido que la demanda de bicis en CDMX tenga una estacionalidad por horas del día y días de la semana. Pero ¿es posible predecir la demanda futura? 
+¡Claro que sí! 🚴🏾
 
 ### Estructura del repositorio:
     .
@@ -50,6 +51,40 @@ Al leer los 48 archivos csv se reestructura por chunks tal que la tabla final in
 
 Para cada estación, se "recorre" la demanda que tuvo en cada ventana de tiempo para que el próximo modelo "aprenda" la estacionalidad y tendencia de la demanda, es decir, podrá contestar la pregunta: ¿Cuántos viajes tendré en mi estación hoy? Porque ahora sabemos cómo fueron los viajes de los últimos 40 días en cada ventana de tiempo.
 
-La estructura de esta tabla queda de la siguiente forma:
+La estructura de esta tabla queda de la siguiente forma, siendo el subíndice "\_n" la demanda hace n-días en la misma ventana de tiempo:
 
 ![Alt text](media/shifted.png?raw=true "Time Window Shifted")
+
+<br>
+
+# Modelo
+
+Se compara el score R<sup>2</sup> de tres modelos:
+
+|Modelo|R<sup>2</sup> test|R<sup>2</sup> train|
+|---|---|---|
+|_Regresión Lineal_|88.70%|88.65%|
+|_Bosque Aleatorio_|88.03%|98.26%|
+|_Red Neuronal (SKlearn)_|87.65%|96.4%|
+
+Por lo tanto, se elige la Regresión Lineal tanto por contar con el mejor score en el conjunto de test (generaliza correctamente porque es prácticamente el mismo score en el conjunto de entrenamiento) como por la baja complejidad del modelo (y peso del mismo para poner en Producción).
+
+<br>
+
+# Resultado
+
+Aún cuando en el entrenamiento contamos con temporadas atípicas derivadas de la pandemia COVID-19, la demanda estimada es muy parecida a la real:
+
+![Alt text](media/forecast.png?raw=true "Time Window Shifted")
+
+<br>
+
+# Siguientes pasos
+
+Se plantea la posibilidad de predecir no sólo la demanda total de hoy con info de los 40 días pasados, sino segmentada por ventana de tiempo. Pruebas preliminares no resultan en R<sup>2</sup> mayor a 65%, se utilizarán modelos de Deep Learning para mejorar este resultado.
+
+
+<br><br>
+
+<div align="center"><strong>¡GRACIAS!</strong></div>
+<br><br>
