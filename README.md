@@ -65,7 +65,7 @@ Se compara el score R<sup>2</sup> de tres modelos:
 |---|---|---|
 |_Regresión Lineal_|88.70%|88.65%|
 |_Bosque Aleatorio_|88.03%|98.26%|
-|_Red Neuronal (SKlearn)_|87.65%|96.4%|
+|_Red Neuronal (SKlearn)_|87.65%|96.40%|
 
 Por lo tanto, se elige la Regresión Lineal tanto por contar con el mejor score en el conjunto de test (generaliza correctamente porque es prácticamente el mismo score en el conjunto de entrenamiento) como por la baja complejidad del modelo (y peso del mismo para poner en Producción).
 
