@@ -52,3 +52,4 @@ Para cada estación, se "recorre" la demanda que tuvo en cada ventana de tiempo 
 
 La estructura de esta tabla queda de la siguiente forma:
 
+![Alt text](media/shifted.png?raw=true "Time Window Shifted")
